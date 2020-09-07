@@ -3,7 +3,7 @@ import cors from 'cors';
 import routes from './routes';
 import validator from './middlewares/validator';
 import logger from './lib/logger';
-import '../database';
+import './database';
 
 class App {
   constructor() {

@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import databaseConfig from '../config/database';
-import Metrics from '../src/models/Metrics';
+import Metrics from '../models/Metrics';
 
 const models = [Metrics];
 

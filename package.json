@@ -8,8 +8,7 @@
     "clean": "rm -rf ./build && mkdir build",
     "build": "yarn clean && sucrase ./src -d ./build --transforms imports",
     "start": "node build/server.js",
-    "migrate": "yarn sequelize db:migrate",
-    "test": "NODE_ENV=TEST mocha"
+    "migrate": "yarn sequelize db:migrate"
   },
   "dependencies": {
     "cors": "^2.8.5",
