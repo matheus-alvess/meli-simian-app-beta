@@ -80,9 +80,9 @@ const stats = async (req, res) => {
     });
 
     res.status(200).json({
-      count_mutant_dna: count_is_simian,
-      count_human_dna: count_is_human,
-      ratio: (count_is_simian / count_is_human).toFixed(1) || 0.0,
+      count_mutant_dna: Number(count_is_simian),
+      count_human_dna: Number(count_is_human),
+      ratio: parseFloat((count_is_simian / count_is_human).toFixed(1)) || 0.0,
     });
   } catch (e) {
     console.log(e);

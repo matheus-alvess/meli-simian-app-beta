@@ -144,3 +144,19 @@ describe('Validate DNA content payload.', () => {
 //       });
 //   });
 // });
+
+describe('Metrics', () => {
+  it('validate metrics - GET /stats', (done) => {
+    chai
+      .request(app)
+      .get('/stats')
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+        expect(res.body.count_mutant_dna).to.be.a('number');
+        expect(res.body.count_human_dna).to.be.a('number');
+        expect(res.body.ratio).to.be.a('number');
+        done();
+      });
+  });
+});
