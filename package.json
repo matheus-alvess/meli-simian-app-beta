@@ -1,0 +1,28 @@
+{
+  "name": "meli-simian-app-beta",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "dev": "nodemon src/server.js",
+    "clean": "rm -rf ./build && mkdir build",
+    "build": "yarn clean && sucrase ./src -d ./build --transforms imports",
+    "start": "node build/server.js",
+    "migrate": "yarn sequelize db:migrate",
+    "test": "NODE_ENV=TEST mocha"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "date-fns": "^2.16.1",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "pg": "^8.3.3",
+    "sequelize": "^6.3.5",
+    "sucrase": "^3.15.0",
+    "winston": "^3.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4",
+    "sequelize-cli": "^6.2.0"
+  }
+}
