@@ -45,12 +45,10 @@ const validatesIfChartIsSquare = (dna) => {
 };
 
 const validateContent = (dna) => {
-  const cleanDna = dna.map((combination) => combination.toUpperCase());
-
-  for (const [line, combination] of cleanDna.entries()) {
+  for (const [line, combination] of dna.entries()) {
     validateIsString(line, combination);
     validateWhetherTheBaseIsNitrogenous(line, combination);
-    validatesIfContentIsSquare(line, combination, cleanDna);
+    validatesIfContentIsSquare(line, combination, dna);
   }
 };
 
@@ -72,11 +70,12 @@ const validatesIfContentIsSquare = (line, combination, dna) => {
 
 const validateWhetherTheBaseIsNitrogenous = (line, combination) => {
   const pattern = ['A', 'T', 'C', 'G'];
+  const cleanCombination = combination.toString().toUpperCase();
 
-  for (const letter of combination) {
+  for (const letter of cleanCombination) {
     if (!pattern.includes(letter)) {
       throw new Error(
-        `the DNA combination letter (${combination} -> ${letter}) passed in line ${
+        `the DNA combination letter (${cleanCombination} -> ${letter}) passed in line ${
           line + 1
         } must be nitrogenous :( .`
       );

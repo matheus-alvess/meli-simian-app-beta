@@ -4,7 +4,9 @@ import Sequelize from 'sequelize';
 
 const processDna = async (req, res) => {
   try {
-    const dna = req.body.dna.map((combination) => combination.toUpperCase());
+    const dna = req.body.dna.map((combination) =>
+      combination.toString().toUpperCase()
+    );
     const generalAccumulatorObj = {
       isSimian: false,
       directions: {
