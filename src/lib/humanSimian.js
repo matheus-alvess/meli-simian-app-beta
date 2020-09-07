@@ -1,5 +1,5 @@
 const validateHorizontalDirection = (generalAccumulatorObj, dna) => {
-  let acumulator = {
+  let accumulator = {
     A: 0,
     T: 0,
     C: 0,
@@ -9,19 +9,26 @@ const validateHorizontalDirection = (generalAccumulatorObj, dna) => {
   const matchesCombinationByLetter = {};
 
   for (const combination of dna) {
-    for (const letter of combination) {
-      acumulator[letter]++;
+    for (const [letterIndex, letter] of combination.split('').entries()) {
+      if (letterIndex === 0) {
+        accumulator[letter]++;
+      } else if (combination[letterIndex - 1] === letter) {
+        accumulator[letter]++;
+      } else {
+        accumulator[letter] = 1;
+      }
       if (!matchesCombinationByLetter[letter]) {
         matchesCombinationByLetter[letter] = 0;
       }
 
-      if (acumulator[letter] > 0 && acumulator[letter] % 4 === 0) {
+      if (accumulator[letter] > 0 && accumulator[letter] % 4 === 0) {
         matchesCombinationByLetter[letter]++;
+        accumulator[letter] = 0;
         generalAccumulatorObj.totalSimians++;
         generalAccumulatorObj.isSimian = true;
       }
     }
-    acumulator = {
+    accumulator = {
       A: 0,
       T: 0,
       C: 0,
@@ -32,45 +39,42 @@ const validateHorizontalDirection = (generalAccumulatorObj, dna) => {
 };
 
 const validateVerticalDirection = (generalAccumulatorObj, dna) => {
-  let acumulator = {
-    A: 0,
-    T: 0,
-    C: 0,
-    G: 0,
-  };
-
   const matchesCombinationByLetter = {};
-  const combinationLimit = dna.length - 1;
+  const accumulator = {};
 
-  for (const [line, combination] of dna.entries()) {
-    for (const [letterIndex, letter] of combination.split('').entries()) {
-      if (!matchesCombinationByLetter[letter]) {
-        matchesCombinationByLetter[letter] = 0;
-      }
-
-      const minimumMatchCount = line + 3;
-      if (minimumMatchCount <= combinationLimit) {
-        if (letter === dna[line + 1][letterIndex]) {
-          acumulator[letter]++;
-        }
-        for (let i = line + 1; i <= minimumMatchCount; i++) {
-          if (letter === dna[i][letterIndex]) {
-            acumulator[letter]++;
-          }
-
-          if (acumulator[letter] > 0 && acumulator[letter] % 4 === 0) {
-            matchesCombinationByLetter[letter]++;
-            generalAccumulatorObj.totalSimians++;
-            generalAccumulatorObj.isSimian = true;
-          }
-        }
-      }
-      acumulator = {
+  dna.forEach(
+    (combination, letterIndex) =>
+      (accumulator[letterIndex] = {
         A: 0,
         T: 0,
         C: 0,
         G: 0,
-      };
+      })
+  );
+
+  for (const [line, combination] of dna.entries()) {
+    for (const [letterIndex, letter] of combination.split('').entries()) {
+      if (line === 0 && accumulator[letterIndex][letter] === 0) {
+        accumulator[letterIndex][letter]++;
+      } else if (line !== 0 && letter === dna[line - 1][letterIndex]) {
+        accumulator[letterIndex][letter]++;
+      } else {
+        accumulator[letterIndex][letter] = 1;
+      }
+
+      if (!matchesCombinationByLetter[letter]) {
+        matchesCombinationByLetter[letter] = 0;
+      }
+
+      if (
+        accumulator[letterIndex][letter] > 0 &&
+        accumulator[letterIndex][letter] % 4 === 0
+      ) {
+        matchesCombinationByLetter[letter]++;
+        accumulator[letterIndex][letter] = 0;
+        generalAccumulatorObj.totalSimians++;
+        generalAccumulatorObj.isSimian = true;
+      }
     }
   }
   generalAccumulatorObj.directions.vertical = matchesCombinationByLetter;
