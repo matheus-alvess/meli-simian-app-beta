@@ -1,4 +1,3 @@
-import humanSimianLib from '../lib/humanSimian';
 import Metrics from '../models/Metrics';
 import Sequelize from 'sequelize';
 
@@ -7,27 +6,12 @@ const processDna = async (req, res) => {
     const dna = req.body.dna.map((combination) =>
       combination.toString().toUpperCase()
     );
-    const generalAccumulatorObj = {
-      isSimian: false,
-      directions: {
-        horizontal: {},
-        vertical: {},
-        diagonal: {},
-      },
-      totalSimians: 0,
-      totalHumans: 0,
-      totalDnas: dna.length * dna.length,
-    };
 
-    const simian = isSimian(generalAccumulatorObj, dna);
+    const simian = isSimian(dna);
 
-    await Metrics.create({
-      is_simian: generalAccumulatorObj.isSimian,
-      directions: JSON.stringify(generalAccumulatorObj.directions),
-      total_simians: generalAccumulatorObj.totalSimians,
-      total_humans: generalAccumulatorObj.totalHumans,
-      total_dnas: generalAccumulatorObj.totalDnas,
-    });
+    // await Metrics.create({
+    //   is_simian: simian
+    // });
 
     if (simian) {
       res.status(200).json({
@@ -46,16 +30,143 @@ const processDna = async (req, res) => {
   }
 };
 
-const isSimian = (generalAccumulatorObj, dna) => {
-  humanSimianLib.validateHorizontalDirection(generalAccumulatorObj, dna);
-  humanSimianLib.validateVerticalDirection(generalAccumulatorObj, dna);
-  humanSimianLib.validateDiagonalDirection(generalAccumulatorObj, dna);
-  humanSimianLib.validateDiagonalDirection(generalAccumulatorObj, dna, true);
+const isSimian = (dna) => {
+  let simian = false;
+  let matchHorizontal = false;
+  let matchVertical = 0;
 
-  generalAccumulatorObj.totalHumans =
-    generalAccumulatorObj.totalDnas - generalAccumulatorObj.totalSimians * 4;
-  return generalAccumulatorObj.isSimian;
+  for (const [line, combination] of dna.entries()) {
+    if (simian) break;
+    for (const [positionCaracter, caracter] of combination
+      .split('')
+      .entries()) {
+      
+      matchHorizontal = equalNextCaracterHorizontal(positionCaracter, combination);
+
+      matchVertical = equalNextCaracterVertical(
+        dna,
+        line,
+        positionCaracter,
+        combination
+      );
+
+      if (matchHorizontal || matchVertical) {
+        console.log('horizontal', matchHorizontal, caracter);
+        console.log('vertical', matchVertical, caracter);
+        simian = true;
+        break;
+      }
+      // // verifica uma possível combinacao com os proximos caracteres na horizontal
+      // if (equalNextCaracterHorizontal(
+      //   positionCaracter,
+      //   combination
+      // )) {
+      //   // verifica se ainda resta o minimo de 3 caracteres para a horizontal a direita
+      //   if (positionCaracter + 3 <= combination.length) {
+      //     for (let i = positionCaracter; i <= positionCaracter + 3; i++) {
+      //       if (!equalNextCaracterHorizontal(
+      //         i,
+      //         combination
+      //       )) {
+      //         break;
+      //       }
+      //       countMatchHorizontal++;
+      //     }
+      //   }
+      // }
+
+
+      // // verifica uma possível combinacao com os proximos caracteres na vertical
+      // if (equalNextCaracterVertical(
+      //   dna,
+      //   line,
+      //   positionCaracter,
+      //   combination
+      // )) {
+      //   // verifica se ainda resta o minimo de 3 caracteres para abaixo na vertical
+      //   if ((line + 3) <= (dna.length - 1)) {
+      //     for (let i = line; i <= line + 3; i++) {
+      //       if (!equalNextCaracterVertical(
+      //         dna,
+      //         i,
+      //         positionCaracter,
+      //         combination
+      //       )) {
+      //         break;
+      //       }
+      //       countMatchVertical++;
+      //     }
+      //   }
+      // }
+
+      // verificando se existe algum padrao simio em algumas das direcoes a partir de posicao atual
+      // if (
+      //   countMatchHorizontal === 3 ||
+      //   countMatchVertical === 3 ||
+      //   countMatchDiagonal === 3
+      // ) {
+      //   console.log(countMatchHorizontal, countMatchVertical, countMatchDiagonal, caracter);
+      //   simian = true;
+      //   break;
+      // } else {
+      //   countMatchHorizontal = 0
+      //   countMatchVertical = 0
+      //   countMatchDiagonal = 0;
+      // }
+    }
+  }
+
+  return simian;
 };
+
+const equalNextCaracterHorizontal = (basePositionCaracter, combination) => {
+  let match = false;
+  let countMatchHorizontal = 0;
+
+  // verifica uma possível combinacao com os proximos caracteres na horizontal
+  if (combination[basePositionCaracter] ===
+    combination[basePositionCaracter + 1]) {
+    // verifica se ainda resta o minimo de 3 caracteres para a horizontal a direita
+    if (basePositionCaracter + 3 <= combination.length) {
+      for (let nextCaracterPosition = basePositionCaracter; nextCaracterPosition <= basePositionCaracter + 3; nextCaracterPosition++) {
+        if (combination[basePositionCaracter] !==
+          combination[nextCaracterPosition]) {
+          break;
+        }
+        countMatchHorizontal++;
+      }
+    }
+  }
+
+  if (countMatchHorizontal >= 4) match = true;
+  return match;
+}
+
+const equalNextCaracterVertical = (
+  dnaCombination,
+  currentLine,
+  currentPositionCaracter,
+  combination
+) => {
+  let match = false;
+  let countMatchVertical = 0;
+
+  if (dnaCombination[currentLine + 1] &&
+      combination[currentPositionCaracter] === dnaCombination[currentLine + 1][currentPositionCaracter]) {
+    // verifica se ainda resta o minimo de 3 caracteres para abaixo na vertical
+    if ((currentLine + 3) <= (dnaCombination.length - 1)) {
+      for (let nextLine = currentLine; nextLine <= currentLine + 3; nextLine++) {
+        if (combination[currentPositionCaracter] !== dnaCombination[nextLine][currentPositionCaracter]) {
+          break;
+        }
+        countMatchVertical++;
+      }
+    }
+  }
+
+  if (countMatchVertical >= 4) match = true;
+  return match;
+}
 
 const stats = async (req, res) => {
   try {

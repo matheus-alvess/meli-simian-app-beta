@@ -89,7 +89,7 @@ const validateDiagonalDirection = (
     dna = dna.map((combination) => combination.split('').reverse().join(''));
   }
 
-  let acumulator = {
+  let accumulator = {
     A: 0,
     T: 0,
     C: 0,
@@ -97,7 +97,6 @@ const validateDiagonalDirection = (
   };
 
   const matchesCombinationByLetter = {};
-  const combinationLimit = dna.length - 1;
 
   for (const [line, combination] of dna.entries()) {
     for (const [letterIndex, letter] of combination.split('').entries()) {
@@ -105,28 +104,20 @@ const validateDiagonalDirection = (
         matchesCombinationByLetter[letter] = 0;
       }
 
-      const minimumMatchCount = line + 3;
-      if (minimumMatchCount <= combinationLimit) {
-        if (
-          letter === dna[line + 1][letterIndex + 1] &&
-          letter === dna[line + 2][letterIndex + 2] &&
-          letter === dna[line + 3][letterIndex + 3]
-        ) {
-          acumulator[letter] = 4;
-        }
-
-        if (acumulator[letter] > 0 && acumulator[letter] % 4 === 0) {
-          matchesCombinationByLetter[letter]++;
-          generalAccumulatorObj.totalSimians++;
-          generalAccumulatorObj.isSimian = true;
-        }
+      if (line === 0) {
+        accumulator[letter]++;
+      } else if (line !== 0 && letter === dna[line - 1][letterIndex + 1]) {
+        accumulator[letter]++;
+      } else {
+        accumulator[letter] = 1;
       }
-      acumulator = {
-        A: 0,
-        T: 0,
-        C: 0,
-        G: 0,
-      };
+
+      if (accumulator[letter] > 0 && accumulator[letter] % 4 === 0) {
+        matchesCombinationByLetter[letter]++;
+        accumulator[letter] = 0;
+        generalAccumulatorObj.totalSimians++;
+        generalAccumulatorObj.isSimian = true;
+      }
     }
   }
 
