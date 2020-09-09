@@ -127,23 +127,38 @@ describe('Validate DNA content payload.', () => {
   });
 });
 
-// describe('POST API', () => {
-//   it('Check DNA is human - POST /simian', (done) => {
-//     chai
-//       .request(app)
-//       .post('/simian')
-//       .send({
-//         dna: ['GATGCA', 'CTGTGC', 'TTATGT', 'AGATGG', 'CGACTA', 'TCACTG'],
-//       })
-//       .end((err, res) => {
-//         expect(res).to.have.status(403);
-//         expect(res.body).to.be.a('object');
-//         expect(res.body.simian).to.be.an('boolean');
-//         expect(res.body.simian).to.be.equal(false);
-//         done();
-//       });
-//   });
-// });
+describe('POST API', () => {
+  it('Check DNA is simian - POST /simian', (done) => {
+    chai
+      .request(app)
+      .post('/simian')
+      .send({
+        dna: ['AACCTG', 'CAAGAT', 'TAAAAA', 'CCGACC', 'AATTCA', 'GAAACC'],
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.a('object');
+        expect(res.body.simian).to.be.an('boolean');
+        expect(res.body.simian).to.be.equal(true);
+        done();
+      });
+  });
+  it('Check DNA is human - POST /simian', (done) => {
+    chai
+      .request(app)
+      .post('/simian')
+      .send({
+        dna: ['AACCTG', 'CAAGAT', 'TAGAAA', 'CCGACC', 'AATTCA', 'GAAACC'],
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(403);
+        expect(res.body).to.be.a('object');
+        expect(res.body.simian).to.be.an('boolean');
+        expect(res.body.simian).to.be.equal(false);
+        done();
+      });
+  });
+});
 
 describe('Metrics', () => {
   it('validate metrics - GET /stats', (done) => {
