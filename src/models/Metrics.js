@@ -5,10 +5,6 @@ class Metrics extends Model {
     super.init(
       {
         is_simian: Sequelize.BOOLEAN,
-        directions: Sequelize.STRING,
-        total_simians: Sequelize.INTEGER,
-        total_humans: Sequelize.INTEGER,
-        total_dnas: Sequelize.INTEGER,
         created_at: Sequelize.DATE,
         updated_at: Sequelize.DATE,
       },

@@ -11,22 +11,6 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
-      directions: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      total_simians: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      total_humans: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
-      total_dnas: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
       created_at: {
         type: Sequelize.DATE,
         default: new Date(),
