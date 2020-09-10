@@ -74,16 +74,15 @@ const isSimian = (dna) => {
 const equalNextCaracterHorizontal = (basePositionCaracter, combination) => {
   let match = false;
   let countMatchHorizontal = 0;
+  const minimumPositionMatch = 3;
 
-  // verifica uma possivel combinacao com os proximos caracteres na horizontal
   if (
     combination[basePositionCaracter] === combination[basePositionCaracter + 1]
   ) {
-    // verifica se ainda resta o minimo de 3 caracteres para a direita na horizontal
-    if (basePositionCaracter + 3 <= combination.length) {
+    if (basePositionCaracter + minimumPositionMatch <= combination.length) {
       for (
         let nextCaracterPosition = basePositionCaracter;
-        nextCaracterPosition <= basePositionCaracter + 3;
+        nextCaracterPosition <= basePositionCaracter + minimumPositionMatch;
         nextCaracterPosition++
       ) {
         if (
@@ -109,17 +108,17 @@ const equalNextCaracterVertical = (
 ) => {
   let match = false;
   let countMatchVertical = 0;
+  const minimumPositionMatch = 3;
 
   if (
     dnaCombination[currentLine + 1] &&
     combination[currentPositionCaracter] ===
       dnaCombination[currentLine + 1][currentPositionCaracter]
   ) {
-    // verifica se ainda resta no minimo de 3 caracteres para abaixo na vertical
-    if (currentLine + 3 <= dnaCombination.length - 1) {
+    if (currentLine + minimumPositionMatch <= dnaCombination.length - 1) {
       for (
         let nextLine = currentLine;
-        nextLine <= currentLine + 3;
+        nextLine <= currentLine + minimumPositionMatch;
         nextLine++
       ) {
         if (
@@ -143,25 +142,24 @@ const equalNextCaracterDiagonal = (
   currentPositionCaracter,
   combination
 ) => {
+  const minimumPositionMatch = 3;
   let match = false;
   let countMatchDiagonal = 0;
   let nextDiagonalCaracterPosition = currentPositionCaracter + 1;
   let previousDiagonalCaracterPosition = currentPositionCaracter - 1;
 
-  // verifica se o caracter atual forma um possivel padrao na diagonal
   if (
     (dnaCombination[currentLine + 1] &&
       combination[currentPositionCaracter] ===
-        dnaCombination[currentLine + 1][currentPositionCaracter + 1]) ||
+        dnaCombination[currentLine + 1][nextDiagonalCaracterPosition]) ||
     (dnaCombination[currentLine + 1] &&
       combination[currentPositionCaracter] ===
-        dnaCombination[currentLine + 1][currentPositionCaracter - 1])
+        dnaCombination[currentLine + 1][previousDiagonalCaracterPosition])
   ) {
-    // verifica se ainda resta o minimo de 3 caracteres para abaixo na vertical
-    if (currentLine + 3 <= dnaCombination.length - 1) {
+    if (currentLine + minimumPositionMatch <= dnaCombination.length - 1) {
       for (
         let nextLine = currentLine + 1;
-        nextLine <= currentLine + 3;
+        nextLine <= currentLine + minimumPositionMatch;
         nextLine++
       ) {
         if (
