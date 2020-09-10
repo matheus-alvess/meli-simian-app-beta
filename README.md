@@ -121,6 +121,16 @@ Response
 
 <hr>
 
+Code coverage
+
+**GET**
+
+```text
+/coverage
+```
+
+<hr>
+
 ## Notes
   
 It is recommended that you run the application on `node_v12 LTS`.

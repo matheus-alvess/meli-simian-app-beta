@@ -3,6 +3,8 @@ import cors from 'cors';
 import routes from './routes';
 import validator from './middlewares/validator';
 import logger from './lib/logger';
+import { resolve } from 'path';
+
 import './database';
 
 class App {
@@ -18,6 +20,10 @@ class App {
     this.server.use(express.json());
     this.server.use(this.requestLogger);
     this.server.use(validator);
+    this.server.get('/', (req, res) => {
+      res.json({ go: 'meli 💪💪' });
+    });
+    this.server.use(express.static(resolve(__dirname, '..', 'coverage')));
   }
 
   requestLogger(req, res, next) {
