@@ -8,10 +8,6 @@ routes.get('/ping', (req, res) => {
   res.json({ message: 'pong' });
 });
 
-routes.get('/', (req, res) => {
-  res.json({ go: 'meli 💪💪' });
-});
-
 routes.get('/coverage', (req, res) => res.sendFile(resolve(__dirname, '..', 'coverage', 'index.html')));
 
 routes.post('/simian', SimianController.processDna);
