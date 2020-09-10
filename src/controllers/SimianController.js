@@ -207,10 +207,7 @@ const stats = async (req, res) => {
     res.status(200).json({
       count_mutant_dna: Number(count_is_simian),
       count_human_dna: Number(count_is_human),
-      ratio:
-        parseFloat(
-          (Number(count_is_simian) / Number(count_is_human)).toFixed(1)
-        ) || 0.0,
+      ratio: calculateRatio(count_is_simian, count_is_human)
     });
   } catch (e) {
     logger.error(e.message);
@@ -219,6 +216,18 @@ const stats = async (req, res) => {
     });
   }
 };
+
+const calculateRatio = (simio, human) => {
+  const ratio = parseFloat(
+    (Number(simio) / Number(human)).toFixed(1)
+  );
+
+  if (ratio === Infinity || isNaN(ratio)) {
+    return 0.0;
+  }
+  
+  return ratio;
+}
 
 export default {
   processDna,
