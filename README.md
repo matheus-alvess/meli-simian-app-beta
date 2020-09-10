@@ -67,6 +67,8 @@ npm run coverage or yarn coverage
 
 The interface for the consumption of the application is through an API Rest.
 
+You can test [online](https://meli-simian-app-beta.herokuapp.com) too.
+
 Endpoint for sending the genetic sequence.
 
 **POST**
