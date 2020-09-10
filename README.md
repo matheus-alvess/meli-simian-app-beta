@@ -2,12 +2,17 @@
 
 <p align="center"><img width=70% src="https://is5-ssl.mzstatic.com/image/thumb/Purple124/v4/f2/68/44/f268440e-fcf7-59bd-a42d-4fe52b51af5d/AppIcon-0-0-1x_U007emarketing-0-0-0-5-0-0-sRGB-0-0-0-GLES2_U002c0-512MB-85-220-0-0.png/1200x630wa.png"></p>
 
-[![JavaScript](https://img.shields.io/badge/-JavaScript-black?style=flat&logo=javascript&link=https://github.com/matheus-alvess)](https://github.com/matheus-alvess) 
+<center>
 
-[![Nodejs](https://img.shields.io/badge/-Nodejs-black?style=flat&logo=Node.js&link=https://github.com/matheus-alvess)](https://github.com/matheus-alvess) 
-[![Docker](https://img.shields.io/badge/-Docker-black?style=flat&logo=docker&link=https://github.com/matheus-alvess)](https://github.com/matheus-alvess) 
+  [![JavaScript](https://img.shields.io/badge/-JavaScript-black?style=flat&logo=javascript&link=https://github.com/matheus-alvess)](https://github.com/matheus-alvess) 
 
-[![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-black?style=flat&logo=PostgreSQL&link=https://github.com/matheus-alvess)](https://github.com/matheus-alvess)
+  [![Nodejs](https://img.shields.io/badge/-Nodejs-black?style=flat&logo=Node.js&link=https://github.com/matheus-alvess)](https://github.com/matheus-alvess) 
+  [![Docker](https://img.shields.io/badge/-Docker-black?style=flat&logo=docker&link=https://github.com/matheus-alvess)](https://github.com/matheus-alvess) 
+
+  [![PostgreSQL](https://img.shields.io/badge/-PostgreSQL-black?style=flat&logo=PostgreSQL&link=https://github.com/matheus-alvess)](https://github.com/matheus-alvess)
+
+</center>
+
 
 ## About
 
