@@ -29,7 +29,7 @@ I go through each line of the square table and for each line I process each char
 
 If any character matches, we try to go through 3 positions in the direction found from the current position of the character and we will store the quantity until we reach the sequence of 4 that corresponds to simio.
 
-adicionar imagem aqui
+<a href="https://imgbb.com/"><img src="https://i.ibb.co/hMbXH1j/Captura-de-Tela-2020-09-10-a-s-23-49-44.png" alt="Captura-de-Tela-2020-09-10-a-s-23-49-44" border="0"></a>
 
 <hr>
 
