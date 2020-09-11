@@ -20,10 +20,15 @@
 The challenge of this application is to assist data science in detecting DNA sequences that will allow us to identify and distinguish simian and human peoples. All of this is done through a simple API Rest, shall we test?
 
 
-## Shall we understand how it all works from behind?
-  
-But first, let's understand a little better how it all works. To identify a possible simian DNA, processing occurs as follows.
-I go through each line of the square table and for each line I process each character. Therefore, I check if there is a possible pattern in all orders (horizontal, vertical or diagonal). If any character matches, we try to go through 3 positions in the direction found from the character's current position and we keep storing the quantity until we reach the sequence of 4 that corresponds to simio.
+## How it works?
+
+
+
+To identify a possible simian DNA, processing occurs as follows.
+
+I go through each line of the square table and for each line I process each character. Therefore, it appears that there is a possible pattern in all orders `(horizontal, vertical or diagonal)`.
+
+If any character matches, we try to go through 3 positions in the direction found from the current position of the character and we will store the quantity until we reach the sequence of 4 that corresponds to simio.
 
 adicionar imagem aqui
 
@@ -83,6 +88,8 @@ The interface for the consumption of the application is through an API Rest.
 
 Endpoint for sending the genetic sequence.
 
+`Obs: Test pass an incorrect body`
+
 **POST**
 ```text
 /simian
@@ -99,6 +106,7 @@ Response
   "simian": true
 }
 ```
+
 <hr>
 
   
