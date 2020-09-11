@@ -51,7 +51,7 @@ If you don't already have PostgreSQL on your machine just use the [docker-compos
 docker-compose -d
 ```
 
-## Run 
+## Usage 
 
 To run the application it is necessary to create an `.env` file at the project root from the `env.sample` file. In this file you must place your settings for your environment.
 
